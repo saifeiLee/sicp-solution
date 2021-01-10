@@ -1,24 +1,41 @@
-const sum = (term, a, next, b) => {
-  if (a > b) return 0;
-  return term(a) + sum(term, next(a), next, b)
+function cube(x) {
+  return x * x * x;
 }
 
-
-const cube = (x) => x * x * x;
-
-const inc = (n) => n + 1;
-
-const sum_cubes = (a, b) => {
-  return sum(cube, a, inc, b);
+function sum_HOF(a, b, next, term) {
+  let res;
+  if (a > b) {
+    res = 0;
+  } else {
+    res = term(a) + sum_HOF(next(a), b, next, term);
+  }
+  return res;
 }
 
-// const res = sum_cubes(1, 10);
-// console.log('sum_cubes(1, 10)', res);
+function simpson(f, a, b, n) {
+  // 是否偶数
+  const isEven = (num) => num % 2 === 0;
 
-const integral = (f, a, b, dx) => {
-  const add_dx = (x) => x + dx;
-  return sum(f, (a + dx / 2.0), add_dx, b) * dx;
+  const h = (b - a) / n;
+
+  const yk = (k) => f(a + (k * h));
+
+  const getCoefficient = (k) => {
+    if (k === 0 || k === n){ 
+      return 1;
+    } else if (isEven(k)) {
+      return 2;
+    } else {
+      return 4;
+    }
+  }
+  const term = k => getCoefficient(k) * yk(k);
+
+  const inc = x => x + 1;
+  return (h * (sum_HOF(0, n, inc, term))) / 3;
 }
 
-const res = integral(cube, 0, 1, 0.01)
-console.log('res:', res);
+console.log('cube 1 100')
+const fx = x => x 
+const res_simpson = simpson(fx, 0, 1, 1000);
+console.log('res_simpson', res_simpson)

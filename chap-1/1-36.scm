@@ -1,19 +1,55 @@
+(define (close-enough? x y)
+    (< (abs (- x y)) 0.001))
+
+(define (average x y)
+    (/ (+ x y) 2))
+
+(define (search f neg-point pos-point)
+    (let ((midpoint (average neg-point pos-point)))
+        (if (close-enough? neg-point pos-point)
+            midpoint
+            (let ((test-value (f midpoint)))
+                (cond ((positive? test-value)
+                        (search f neg-point midpoint))
+                        ((negative? test-value)
+                            (search f midpoint pos-point))
+                        (else midpoint))))))
+
+(define (half-interval-method f a b)
+    (let ((a-value (f a))
+        (b-value (f b)))
+        (cond ((and (negative? a-value) (positive? b-value)) (search f a b))
+            ((and (negative? b-value) (positive? a-value)) (search f b a))
+            (else
+                (error "Value are not of opposite sign " a b)))))
+(define res_1 (half-interval-method sin 2.0 4.0))
+(display res_1)
+(display "\n")
+
+; fix point
 (define tolerance 0.00001)
-(define (fix-point f first-guess)
-    (define (good-enough? guess next)
-        (< (abs (- guess next)) tolerance))
+(define (fixed-point f first-guess)
+    (define (close-enough? v1 v2)
+        (< (abs (- v1 v2)) tolerance))
     (define (try guess)
+        (display guess)
+        (newline)
         (let ((next (f guess)))
-            (if (good-enough? guess next)
+            (if (close-enough? guess next)
                 guess
                 (try next))))
     (try first-guess))
+; (define fp_1 (fixed-point (lambda (y) (+ (sin y) (cos y)))
+;     1.0))
+(define (fx x) (/ (log 1000) (log x)))
+(define res_1 (fixed-point fx 2.0))
+(display res_1)
+(newline)
 
-; test
-; (define cos_1 (fix-point cos 1))
-; (display cos_1)
-
-; 求黄金分割的值
-(define gold_divide_pnt (fix-point (lambda (x) (+ 1 (/ 1 x))) 1.0))
-(display gold_divide_pnt)
-(display "\n")
+(display "使用振荡阻尼技术")
+(newline)
+(define (find_res x)
+    (fixed-point (lambda (x) (average x (fx x))) 2.0))
+(define res_2 (find_res 2.0))
+(display res_2)
+(newline)
