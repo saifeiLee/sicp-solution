@@ -1,0 +1,11 @@
+(define (pow base exp)
+    (define (iter base exp accu)
+        (if (= exp 0)
+            accu
+            (iter base (- exp 1) (* base accu))))
+    (iter base exp 1))
+(define (cubic a b c)
+    (lambda (x) (+ (pow x 3)
+                (* (pow x 2) a)
+                (* x b)
+                c)))
