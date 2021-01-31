@@ -1,3 +1,4 @@
+; 获取表中指定下标的元素
 (define (list-ref l n)
     (if (= n 0)
         (car l)
@@ -13,6 +14,7 @@
         (+ 1 (length (cdr items)))))
 
 ; (display (length suqares))
+; 将list1和list2组合
 (define (append list1 list2)
     (if (null? list1)
         list2
