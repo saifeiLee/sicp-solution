@@ -10,3 +10,18 @@
 
 (define items-3 (list 1 (list 2 (list 3 (list 4 (list 5 (list 6 7)))))))
 (display (cadadr (cadadr (cadadr items-3))))
+
+; solution 2
+(newline)
+(define (compose f g)
+    (lambda (x) (f (g x))))
+(define (repeated f n)
+    (if (= n 1)
+        f
+        (compose f (repeated f (- n 1)))))
+
+(define (pick-items items)
+    (define (pick items)
+        (car (cdr items)))
+    (display ((repeated pick 6) items)))
+(pick-items items-3)
