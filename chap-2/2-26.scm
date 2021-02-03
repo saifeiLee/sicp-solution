@@ -16,3 +16,5 @@
 (display (cdr test_2))
 (newline)
 (display (car test_2))
+(newline)
+(display (append (list 4) x))
