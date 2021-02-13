@@ -1,0 +1,28 @@
+(define nil '())
+; (define test (cons 1 nil))
+(define test (list 1 nil))
+(display test)
+(newline)
+(display (car test))
+(newline)
+(display (cdr test))
+; (define t (list 1 2))
+(newline)
+
+(define (scale-tree-recur tree factor)
+    (cond ((null? tree) nil)
+        ((not (pair? tree)) (* factor tree))
+        (else
+            (cons (scale-tree (car tree) factor)
+                    (scale-tree (cdr tree) factor)))))
+
+(define (scale-tree tree factor)
+    (map (lambda (sub-tree) 
+        (if (pair? sub-tree)
+            (scale-tree sub-tree factor)
+            (* sub-tree factor)))
+        tree))
+
+(define tree (list 1 (list 2 (list 3 4) 5) (list 6 7)))
+(display (scale-tree tree 10))
+(newline)
