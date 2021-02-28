@@ -21,7 +21,8 @@
 (define empty-board nil)
 
 ; queens的实现思路比较清晰，问题是内部的那几个方法的实现原理
-
+; 思路：生成所有序列，然后filter
+; 难点在于：如何递归的生成所有序列？如何判断？
 (define (queens board-size)
     ; 返回在棋盘的前k列放皇后的所有格局的序列
     (define (queen-cols k)
