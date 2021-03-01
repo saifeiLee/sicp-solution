@@ -66,4 +66,5 @@
     (iter 0 items))
 
 ; test
-(print (queens 4))
+; (print (queens 4))
+(print (list empty-board))
