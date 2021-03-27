@@ -1,0 +1,6 @@
+(define (equal? a b)
+    (cond ((and (list? a) (list? b))
+            (and (= (car a) (car b)) (equal? (cdr a) (cdr b))))
+            ((not (or (list? a) (list? b)))
+            (eq? a b))
+            (else #f)))
