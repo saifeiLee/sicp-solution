@@ -49,9 +49,10 @@
             result-list
             (copy-to-list (left-branch tree)
                         (cons (entry tree)
-                            (right-branch tree)
-                            result-list))))
-    (copy-to-list ree '()))
+                            (copy-to-list
+                                (right-branch tree)
+                                result-list)))))
+    (copy-to-list tree '()))
 ; test
 (define (print item)
     (display item)
@@ -82,7 +83,8 @@
                 '())))))))) 
 (print sample-tree)
 
-
+(print (tree->list-1 sample-tree))
+(print (tree->list-2 sample-tree))
 ; 结果一样
 ; 时间复杂度不同，
 ; 第一种为: O(logn * n) 为什么呢？
