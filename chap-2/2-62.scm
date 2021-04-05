@@ -22,9 +22,21 @@
             ((< x (car set)) (cons x set))
             (else (cons (car set) (adjoin-set x (cdr set))))))
 
+(define (union-set set1 set2)
+    (define (iter s1 s2 acc)
+        (cond ((null? s1) (append acc s2))
+            ((null? s2) (append acc s1))
+            ((< (car s1) (car s2))
+                (iter (cdr s1) s2 (append acc (list (car s1)))))
+            ((< (car s1) (car s2))
+                (iter s1 (cdr s2) (append acc (list (car s2)))))
+            (else (iter s1 s2 (append acc (list (car s1)))))))
+    (iter set1 set2 '()))
+
 (define (print item)
     (display item)
     (newline))
 ; test
+(define set1 (list 1 2))
 (define set2 (list 3 4 5 6))
-(print (adjoin-set 8 set2))
+(print (union-set set1 set2))
