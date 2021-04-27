@@ -69,7 +69,7 @@
     (if (has-symbol? symbol (symbols tree))
         (let ((left (left-branch tree))
              (right (right-branch tree)))
-             (if (has-symbol? symbol left)
+             (if (has-symbol? symbol (symbols left))
                  (if (leaf? left)
                      '(0)
                      (cons 0 (encode-symbol symbol left)))
@@ -99,3 +99,6 @@
     (generate-huffman-tree
         '((A 2) (NA 16) (BOOM 1) (SHA 3) (GET 2) 
       (YIP 9) (JOB 2) (WAH 1))))
+
+(define msg (encode '(Get a job) sample-tree))
+(print msg)
